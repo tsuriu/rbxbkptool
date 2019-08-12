@@ -89,3 +89,5 @@ main(){
     echo "Something has fail, please check..."
   fi
 }
+
+main
