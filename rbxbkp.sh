@@ -62,7 +62,7 @@ bkpdisc(){
 
     diffDate=$(getDateDiff $datenow $timestr)
 
-    echo $datenow $bkpdate $bkpname $diffDate
+    echo $datenow $timestr $bkpdate $bkpname $diffDate
 
     if [ $diffDate -le 1 ]
     then
