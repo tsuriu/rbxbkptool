@@ -21,6 +21,7 @@ nfsmnt(){
 checknfs(){
   chkmnt=$(df -h | grep $NFS_DIR | wc -l)
   echo $chkmnt
+
   if [ $chkmnt -eq 1 ]
   then
       echo "1"
@@ -77,7 +78,7 @@ bkpdisc(){
 
 if [ $(checknfs) == "0" ]
 then
-  bkprun
+  #bkprun
   bkpdisc
   echo "Everything works fine!"
 else
