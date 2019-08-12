@@ -77,9 +77,7 @@ bkpdisc(){
 
 
 
-nfsst=$(checknfs)
-echo $nfsst
-if [ $nfsst == "0" ]
+if [ $(checknfs) == "0" ]
 then
   bkprun
   bkpdisc
