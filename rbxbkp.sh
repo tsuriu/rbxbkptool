@@ -19,7 +19,8 @@ nfsmnt(){
 }
 
 checknfs(){
-  chkmnt=$(df -h | grep $NFS_DIR | wc -l)
+  echo "OI PABU"
+  chkmnt=$(df -h | grep $NFS_DIR)
   echo $chkmnt
 
   if [ $chkmnt -eq 1 ]
