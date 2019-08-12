@@ -70,7 +70,6 @@ bkpdisc(){
   done
 }
 
-
 nfsst=$(checknfs)
 if [ $nfsst == "0" ]
 then
