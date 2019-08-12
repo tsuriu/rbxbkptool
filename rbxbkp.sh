@@ -22,10 +22,10 @@ checknfs(){
   chkmnt=$(df -h | grep $NFS_DIR | wc -l)
   if [ $chkmnt -eq 1 ]
   then
-      echo "1"
+      echo "0"
       echo "OK! NFS IS MOUNTED" >> $LOG_FILE
   else
-      echo "0"
+      echo "1"
       echo "FAIL! NFS IF NOTE MOUNTED... Hang on, I'll try to mount it now." >> $LOG_FILE
       nfsmnt
   fi  
