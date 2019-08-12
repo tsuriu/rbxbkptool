@@ -54,7 +54,7 @@ bkpdisc(){
   for FILE in $FILES
   do
     bkpname=$(cut -d"|" -f2 <<< $FILE)
-    bkpdate=$(cut -d" " -f1 <<< $FILE)
+    bkpdate=$(cut -d"|" -f1 <<< $FILE)
 
     timestr=$(convertDate $bkpdate)
 
