@@ -38,7 +38,7 @@ convertDate(){
 getDateDiff(){
   dt1=$1
   dt2=$2
-  echo $(( (d1 - d2) )) #Difference given in days
+  echo "( $d1 - $d2 ) / 86400" | bc #Difference given in days
 }
 
 bkprun(){
