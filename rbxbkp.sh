@@ -7,7 +7,7 @@ LOG_FILE='/var/log/rbx_bkp.log'
 NFS_DIR='/mnt/RBX_BKP'
 BKP_DIR='/var/www/routerbox/file/doc'
 
-FILES=`ls -l --time-style="long-iso" /var/www/routerbox/file/doc | grep bkp | awk '$1=$1' | cut -d" " -f5,8 | sed "s/ /\|/g"`
+FILES=`ls -l --time-style="long-iso" /var/www/routerbox/file/doc | grep bkp | awk '$1=$1' | cut -d" " -f6,8 | sed "s/ /\|/g"`
 
 nfsmnt(){
   nfsvar=$(mount -t nfs 172.31.254.26:/nfs/rbx $NFS_DIR -O user=rbx,pass=e45b6e3959 | wc -l)
