@@ -76,19 +76,16 @@ bkpdisc(){
   done
 }
 
-main(){
-  nfsst=$(checknfs)
-  if [ $nfsst == "0" ]
-  then
-    bkprun
 
-    bkpdisc
 
-    echo "Everything works fine!"
-  elif [ $nfsst == "1" ]
-  then
-    echo "Something has fail, please check..."
-  fi
-}
+nfsst=$(checknfs)
 
-main
+if [ $nfsst == "0" ]
+then
+  bkprun
+  bkpdisc
+  echo "Everything works fine!"
+elif [ $nfsst == "1" ]
+then
+  echo "Something has fail, please check..."
+fi
