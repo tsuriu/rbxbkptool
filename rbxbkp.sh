@@ -60,7 +60,7 @@ bkpdisc(){
 
     datenow=$(date +%s)
 
-    diffDate=$(getDateDiff $datenow $bkpdate)
+    diffDate=$(getDateDiff $datenow $timestr)
 
     echo $datenow $bkpdate $bkpname $diffDate
 
