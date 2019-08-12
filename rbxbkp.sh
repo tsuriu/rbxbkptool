@@ -26,7 +26,7 @@ checknfs(){
   then
       echo "0"
       echo "OK! NFS IS MOUNTED" >> $LOG_FILE
-  elif [$chkmnt -eq 0 ]
+  elif [ $chkmnt -eq 0 ]
   then
       echo "1"
       echo "FAIL! NFS IF NOTE MOUNTED... Hang on, I'll try to mount it now." >> $LOG_FILE
@@ -77,7 +77,7 @@ bkpdisc(){
 
 main(){
   nfsst=$(checknfs)
-  if [ $nfsst -eq 1 ]
+  if [ $nfsst -eq "0" ]
   then
     bkprun
 
