@@ -23,7 +23,7 @@ checknfs(){
   echo " "
   echo "$NFS_DIR"
   echo " "
-  chkmnt=$(df -h | grep $NFS_DIR)
+  chkmnt=$(df -h | grep $NFS_DIR | wc -l)
   echo $chkmnt
 
   if [ $chkmnt -eq 1 ]
