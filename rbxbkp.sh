@@ -13,7 +13,7 @@ FILES=`ls -l --time-style="long-iso" $BKP_DIR | grep bkp | tr -s " " | cut -d" "
 
 nfsmnt(){
   nfsvar=$(mount -t nfs 172.31.254.26:/nfs/rbx $NFS_DIR -O user=rbx,pass=e45b6e3959 | wc -l)
-  if [ $nfsvar -eq 0]
+  if [ $nfsvar -eq 0 ]
   then
       echo "0"
       echo "OK! NFS IS NOW MOUNTED!" >> $LOG_FILE
@@ -22,6 +22,7 @@ nfsmnt(){
 
 checknfs(){
   chkmnt=$(df -h | grep $NFS_DIR | wc -l)
+  echo $checknfs
   if [ $chkmnt -eq 1 ]
   then
       echo "0"
