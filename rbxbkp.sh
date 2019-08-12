@@ -62,6 +62,8 @@ bkpdisc(){
 
     diffDate=$(getDateDiff $datenow $bkpdate)
 
+    echo $bkpname $diffDate
+
     if [ $diffDate -le 1 ]
     then
       cp $BKP_DIR/$bkpname $NFS_DIR
