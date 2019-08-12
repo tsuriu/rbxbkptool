@@ -4,7 +4,7 @@ TMP_FILE='rbx_bkp_tmp.csv'
 
 LOG_FILE='/var/log/rbx_bkp.log'
 
-NFS_DIR='/mnt/RBX_BKP/'
+NFS_DIR='/mnt/RBX_BKP'
 BKP_DIR='/var/www/routerbox/file/doc/'
 
 FILES=`ls -l --time-style="long-iso" $BKP_DIR | grep bkp | tr -s " " | cut -d" " -f6-`
@@ -19,7 +19,9 @@ nfsmnt(){
 }
 
 checknfs(){
-  echo "OI PABU"
+  echo "OI PABU\n"
+
+  echo "$NFS_DIR"
   chkmnt=$(df -h | grep $NFS_DIR)
   echo $chkmnt
 
