@@ -74,6 +74,7 @@ bkpdisc(){
 
 
 a=$(checknfs)
+echo $a
 if [ $a == "0" ]
 then
   #bkprun
