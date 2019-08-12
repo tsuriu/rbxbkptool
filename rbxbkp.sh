@@ -25,11 +25,10 @@ checknfs(){
   echo $checknfs
   if [ $chkmnt -eq 1 ]
   then
-      echo "0"
-      echo "OK! NFS IS MOUNTED" >> $LOG_FILE
-  elif [ $chkmnt -eq 0 ]
-  then
       echo "1"
+      echo "OK! NFS IS MOUNTED" >> $LOG_FILE
+  else
+      echo "0"
       echo "FAIL! NFS IF NOTE MOUNTED... Hang on, I'll try to mount it now." >> $LOG_FILE
       nfsmnt
   fi  
@@ -85,7 +84,6 @@ then
   bkprun
   bkpdisc
   echo "Everything works fine!"
-elif [ $nfsst == "1" ]
-then
+else
   echo "Something has fail, please check..."
 fi
