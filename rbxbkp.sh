@@ -5,7 +5,7 @@ TMP_FILE='rbx_bkp_tmp.csv'
 LOG_FILE='/var/log/rbx_bkp.log'
 
 NFS_DIR='/mnt/RBX_BKP'
-BKP_DIR='/var/www/routerbox/file/doc/'
+BKP_DIR='/var/www/routerbox/file/doc'
 
 FILES=`ls -l --time-style="long-iso" $BKP_DIR | grep bkp | tr -s " " | cut -d" " -f6-`
 
@@ -66,7 +66,7 @@ bkpdisc(){
 
     if [ $diffDate -le 1 ]
     then
-      cp $BKP_DIR/$bkpname $NFS_DIR/routerbox_bkp_$bkpdate.$bkpext
+      cp $BKP_DIR/$bkpname $NFS_DIR
       echo "$bkpname has been transfered" >> $LOG_FILE
     fi        
   done
