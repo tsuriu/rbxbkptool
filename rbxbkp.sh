@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "FUCKING"
-
 TMP_FILE='rbx_bkp_tmp.csv'
 
 LOG_FILE='/var/log/rbx_bkp.log'
@@ -22,7 +20,7 @@ nfsmnt(){
 
 checknfs(){
   chkmnt=$(df -h | grep $NFS_DIR | wc -l)
-  echo $checknfs
+  echo $chkmnt
   if [ $chkmnt -eq 1 ]
   then
       echo "1"
