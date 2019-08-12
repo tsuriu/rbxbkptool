@@ -19,9 +19,10 @@ nfsmnt(){
 }
 
 checknfs(){
-  echo "OI PABU\n"
-
+  echo "OI PABU"
+  echo " "
   echo "$NFS_DIR"
+  echo " "
   chkmnt=$(df -h | grep $NFS_DIR)
   echo $chkmnt
 
