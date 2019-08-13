@@ -54,10 +54,10 @@ bkpdisc(){
 
   for FILE in $FILES
   do
-    bkpname=$(cut -d"|" -f2 <<< $FILE)
-    bkpdate=$(cut -d"|" -f1 <<< $FILE)
+    flname=$(cut -d"|" -f2 <<< $FILE)
+    fldate=$(cut -d"|" -f1 <<< $FILE)
 
-    timestr=$(convertDate $bkpdate)
+    timestr=$(convertDate $fldate)
 
     datenow=$(date +%s)
 
@@ -65,27 +65,27 @@ bkpdisc(){
 
     echo $diffDate
 
-    echo $datenow $timestr $bkpdate $bkpname
+    echo $datenow $timestr $fldate $flname
 
-    finalfile=$(echo "$timestr"_"$bkpname") 
+    finalfile=$(echo "$timestr"_"$flname") 
 
     if [ $diffDate -le 7 ]
     then
-      #cp $BKP_DIR/$bkpname $NFS_DIR/$finalfile
+      #cp $BKP_DIR/$flname $NFS_DIR/$finalfile
       echo $finalfile
-      echo "$bkpname has been transfered" >> $LOG_FILE
+      echo "$flname has been transfered" >> $LOG_FILE
     fi        
   done
 }
 
 housekeeper(){
 
-  echo "Starting to move files to the right places" >> $LOG_FILE
+  echo "It's time to clean your mess" >> $LOG_FILE
 
   for BKFILE in $BKFILES
   do
-    bkpname=$(cut -d"|" -f2 <<< $FILE)
-    bkpdate=$(cut -d"|" -f1 <<< $FILE)
+    bkpname=$(cut -d"|" -f2 <<< $BKFILE)
+    bkpdate=$(cut -d"_" -f1 <<< $bkpname)
 
     timestr=$(convertDate $bkpdate)
 
@@ -99,18 +99,18 @@ housekeeper(){
 
     if [ $diffDate -gt 7 ]
     then
-      #cp $BKP_DIR/$bkpname $NFS_DIR
-      echo "$bkpname has been transfered" >> $LOG_FILE
+      rm -rf $NFS_DIR/$bkpname
+      echo "$bkpname has been deleted" >> $LOG_FILE
     fi        
   done
 }
-
 
 nfsst=$(checknfs)
 if [ $nfsst == "0" ]
 then
   #bkprun
   bkpdisc
+  housekeeper
   echo "Everything works fine!"
 else
   echo "Something has fail, please check..."
