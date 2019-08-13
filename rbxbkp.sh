@@ -66,9 +66,9 @@ bkpdisc(){
 
     echo $datenow $timestr $bkpdate $bkpname 
 
-    if [ $diffDate -le 1 ]
+    if [ $diffDate -le 7 ]
     then
-      #cp $BKP_DIR/$bkpname $NFS_DIR
+      cp $BKP_DIR/$bkpname $NFS_DIR
       echo "$bkpname has been transfered" >> $LOG_FILE
     fi        
   done
