@@ -8,6 +8,7 @@ NFS_DIR='/mnt/RBX_BKP'
 BKP_DIR='/var/www/routerbox/file/doc'
 
 FILES=`ls -l --time-style="long-iso" /var/www/routerbox/file/doc | grep bkp | awk '$1=$1' | cut -d" " -f6,8 | sed "s/ /\|/g"`
+BKFILES=`ls -l --time-style="long-iso" $NFS_DIR | grep bkp | awk '$1=$1' | cut -d" " -f6,8 | sed "s/ /\|/g"`
 
 nfsmnt(){
   nfsvar=$(mount -t nfs 172.31.254.26:/nfs/rbx $NFS_DIR -O user=rbx,pass=e45b6e3959 | wc -l)
@@ -64,15 +65,46 @@ bkpdisc(){
 
     echo $diffDate
 
-    echo $datenow $timestr $bkpdate $bkpname 
+    echo $datenow $timestr $bkpdate $bkpname
+
+    finalfile=$(echo "$timestr"_"$bkpname") 
 
     if [ $diffDate -le 7 ]
+    then
+      #cp $BKP_DIR/$bkpname $NFS_DIR/$finalfile
+      echo $finalfile
+      echo "$bkpname has been transfered" >> $LOG_FILE
+    fi        
+  done
+}
+
+housekeeper(){
+
+  echo "Starting to move files to the right places" >> $LOG_FILE
+
+  for BKFILE in $BKFILES
+  do
+    bkpname=$(cut -d"|" -f2 <<< $FILE)
+    bkpdate=$(cut -d"|" -f1 <<< $FILE)
+
+    timestr=$(convertDate $bkpdate)
+
+    datenow=$(date +%s)
+
+    diffDate=$(getDateDiff $datenow $timestr)
+
+    echo $diffDate
+
+    echo $datenow $timestr $bkpdate $bkpname 
+
+    if [ $diffDate -gt 7 ]
     then
       #cp $BKP_DIR/$bkpname $NFS_DIR
       echo "$bkpname has been transfered" >> $LOG_FILE
     fi        
   done
 }
+
 
 nfsst=$(checknfs)
 if [ $nfsst == "0" ]
