@@ -10,6 +10,8 @@ BKP_DIR='/var/www/routerbox/file/doc'
 FILES=`ls -l --time-style="long-iso" /var/www/routerbox/file/doc | grep bkp | awk '$1=$1' | cut -d" " -f6,8 | sed "s/ /\|/g"`
 BKFILES=`ls -l --time-style="long-iso" $NFS_DIR | grep bkp | awk '$1=$1' | cut -d" " -f6,8 | sed "s/ /\|/g"`
 
+bkpusr='tulioamancio'
+
 nfsmnt(){
   nfsvar=$(mount -t nfs 172.31.254.26:/nfs/rbx $NFS_DIR -O user=rbx,pass=e45b6e3959 | wc -l)
   if [ $nfsvar -eq 0 ]
@@ -44,7 +46,7 @@ getDateDiff(){
 
 bkprun(){
   echo "Running RouterBOX backup routine" >> $LOG_FILE
-  /usr/bin/utils/router.box/backup
+  /usr/bin/utils/router.box/backup $bkpusr isupergaus;
   echo "RouterBOX backup is done" >> $LOG_FILE
 }
 
