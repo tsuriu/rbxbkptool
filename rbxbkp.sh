@@ -46,7 +46,7 @@ getDateDiff(){
 
 bkprun(){
   echo "Running RouterBOX backup routine" >> $LOG_FILE
-  /usr/bin/utils/router.box/backup $bkpusr isupergaus;
+  /usr/bin/utils/router.box/backup executa $bkpusr isupergaus;
   echo "RouterBOX backup is done" >> $LOG_FILE
 }
 
