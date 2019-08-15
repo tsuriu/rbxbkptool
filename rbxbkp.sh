@@ -12,6 +12,10 @@ BKFILES=`ls -l --time-style="long-iso" $NFS_DIR | grep bkp | awk '$1=$1' | cut -
 
 bkpusr='tulioamancio'
 
+rmtlog(){
+  #Write something!
+}
+
 nfsmnt(){
   nfsvar=$(mount -t nfs 172.31.254.26:/nfs/rbx $NFS_DIR -O user=rbx,pass=e45b6e3959 | wc -l)
   if [ $nfsvar -eq 0 ]
@@ -46,8 +50,11 @@ getDateDiff(){
 
 bkprun(){
   echo "Running RouterBOX backup routine" >> $LOG_FILE
+  t1=$(date "+%s")
   /usr/bin/utils/router.box/backup executa $bkpusr isupergaus;
-  echo "RouterBOX backup is done" >> $LOG_FILE
+  t2=$(date "+%s")
+  t=$(echo $(($(( $t1 - $t2 )) / 60)))
+  echo "RouterBOX backup is done in $t secs" >> $LOG_FILE
 }
 
 bkpdisc(){
@@ -65,16 +72,11 @@ bkpdisc(){
 
     diffDate=$(getDateDiff $datenow $timestr)
 
-    echo $diffDate
-
-    echo $datenow $timestr $fldate $flname
-
     finalfile=$(echo "$timestr"_"$flname") 
 
     if [ $diffDate -le 7 ]
     then
-      #cp $BKP_DIR/$flname $NFS_DIR/$finalfile
-      echo $finalfile
+      cp $BKP_DIR/$flname $NFS_DIR/$finalfile
       echo "$flname has been transfered" >> $LOG_FILE
     fi        
   done
@@ -95,10 +97,6 @@ housekeeper(){
 
     diffDate=$(getDateDiff $datenow $timestr)
 
-    echo $diffDate
-
-    echo $datenow $timestr $bkpdate $bkpname 
-
     if [ $diffDate -gt 7 ]
     then
       rm -rf $NFS_DIR/$bkpname
@@ -110,7 +108,7 @@ housekeeper(){
 nfsst=$(checknfs)
 if [ $nfsst == "0" ]
 then
-  #bkprun
+  bkprun
   bkpdisc
   housekeeper
   echo "Everything works fine!"
