@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#try
 TMP_FILE='rbx_bkp_tmp.csv'
 
 LOG_FILE='/var/log/rbx_bkp.log'
