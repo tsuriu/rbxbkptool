@@ -114,7 +114,6 @@ then
 #  bkprun
   bkpdisc
 #  housekeeper
-#
   echo "Everything works fine!"
 else
   echo "Something has fail, please check..."
