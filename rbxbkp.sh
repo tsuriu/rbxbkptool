@@ -1,5 +1,8 @@
 #!/bin/bash
+#this a try
+#
 
+#try
 TMP_FILE='rbx_bkp_tmp.csv'
 
 LOG_FILE='/var/log/rbx_bkp.log'
@@ -35,7 +38,7 @@ checknfs(){
       echo "1"
       echo "FAIL! NFS IF NOTE MOUNTED... Hang on, I'll try to mount it now." >> $LOG_FILE
       nfsmnt
-  fi  
+  fi
 }
 
 convertDate(){
@@ -72,13 +75,13 @@ bkpdisc(){
 
     diffDate=$(getDateDiff $datenow $timestr)
 
-    finalfile=$(echo "$timestr"_"$flname") 
+    finalfile=$(echo "$timestr"_"$flname")
 
     if [ $diffDate -le 7 ]
     then
       cp $BKP_DIR/$flname $NFS_DIR/$finalfile
       echo "$flname has been transfered" >> $LOG_FILE
-    fi        
+    fi
   done
 }
 
@@ -101,16 +104,17 @@ housekeeper(){
     then
       rm -rf $NFS_DIR/$bkpname
       echo "$bkpname has been deleted" >> $LOG_FILE
-    fi        
+    fi
   done
 }
 
 nfsst=$(checknfs)
 if [ $nfsst == "0" ]
 then
-  bkprun
+#  bkprun
   bkpdisc
 #  housekeeper
+#
   echo "Everything works fine!"
 else
   echo "Something has fail, please check..."
