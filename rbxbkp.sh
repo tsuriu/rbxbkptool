@@ -104,7 +104,7 @@ housekeeper(){
 nfsst=$(checknfs)
 if [ $nfsst == "0" ]
 then
-#  bkprun
+  bkprun
   bkpdisc
 #  housekeeper
   echo "Everything works fine!"
