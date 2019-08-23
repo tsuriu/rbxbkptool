@@ -94,7 +94,7 @@ housekeeper(){
 
     datenow=$(date +%s)
 
-    echo "$datenow $timestr"
+    echo "$timestr"
 
     diffDate=$(getDateDiff $datenow $timestr)
 
