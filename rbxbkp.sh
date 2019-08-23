@@ -110,7 +110,7 @@ if [ $nfsst == "0" ]
 then
 #  bkprun
   bkpdisc
-#  housekeeper
+  housekeeper
   echo "Everything works fine!"
 else
   echo "Something has fail, please check..."
