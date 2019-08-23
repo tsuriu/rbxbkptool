@@ -72,7 +72,7 @@ bkpdisc(){
 
     echo "$diffDate $finalfile"
 
-    if [ $diffDate -le 7 ]
+    if [ $diffDate -le 7 -a ! -f "$NFS_DIR/$finalfile"]
     then
       echo "fuck this shit.. $flname"
   #    cp $BKP_DIR/$flname $NFS_DIR/$finalfile
