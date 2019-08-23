@@ -70,9 +70,7 @@ bkpdisc(){
 
     diffDate=$(getDateDiff $datenow $timestr)
 
-    finalfile=$(echo "$timestr"_"$flname")
-
-    echo "$diffDate $finalfile"
+    finalfile=$(echo "$timestr"_"$flname") 
 
     if [ $diffDate -le 7 -a ! -f "$NFS_DIR/$finalfile" ]
     then
@@ -97,6 +95,8 @@ housekeeper(){
     datenow=$(date +%s)
 
     diffDate=$(getDateDiff $datenow $timestr)
+
+    echo $diffDate
 
     if [ $diffDate -gt 7 ]
     then
