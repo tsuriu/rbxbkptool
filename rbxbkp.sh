@@ -98,7 +98,8 @@ housekeeper(){
 
     if [ $diffDate -gt 7 ]
     then
-      rm -rf $NFS_DIR/$bkpname
+      echo "bye bye... $bkpname"
+    #  rm -rf $NFS_DIR/$bkpname
       echo "$bkpname has been deleted" >> $LOG_FILE
     fi
   done
