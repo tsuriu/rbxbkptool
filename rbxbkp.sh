@@ -75,6 +75,7 @@ bkpdisc(){
 
     if [ $diffDate -le 7 -a ! -f "$NFS_DIR/$finalfile" ]
     then
+      echo "PUPU $finalfile"
   #    cp $BKP_DIR/$flname $NFS_DIR/$finalfile
       echo "$flname has been transfered" >> $LOG_FILE
     fi
