@@ -74,6 +74,7 @@ bkpdisc(){
 
     if [ $diffDate -le 7 ]
     then
+      echo "fuck this shit.. $flname"
   #    cp $BKP_DIR/$flname $NFS_DIR/$finalfile
       echo "$flname has been transfered" >> $LOG_FILE
     fi
