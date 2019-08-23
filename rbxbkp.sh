@@ -70,9 +70,11 @@ bkpdisc(){
 
     finalfile=$(echo "$timestr"_"$flname")
 
+    echo "$diffDate $finalfile"
+
     if [ $diffDate -le 7 ]
     then
-      cp $BKP_DIR/$flname $NFS_DIR/$finalfile
+  #    cp $BKP_DIR/$flname $NFS_DIR/$finalfile
       echo "$flname has been transfered" >> $LOG_FILE
     fi
   done
@@ -104,7 +106,7 @@ housekeeper(){
 nfsst=$(checknfs)
 if [ $nfsst == "0" ]
 then
-  bkprun
+#  bkprun
   bkpdisc
 #  housekeeper
   echo "Everything works fine!"
