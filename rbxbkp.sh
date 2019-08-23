@@ -41,6 +41,8 @@ convertDate(){
 getDateDiff(){
   dt1=$1
   dt2=$2
+  echo $dt1
+  echo $dt2
   echo $(($(( $dt1 - $dt2 )) / 86400)) #Difference given in days
 }
 
@@ -93,8 +95,6 @@ housekeeper(){
     timestr=$(convertDate $bkpdate)
 
     datenow=$(date +%s)
-
-    echo "$timestr"
 
     diffDate=$(getDateDiff $datenow $timestr)
 
