@@ -41,8 +41,7 @@ convertDate(){
 getDateDiff(){
   dt1=$1
   dt2=$2
-  echo $dt1
-  echo $dt2
+  
   echo $(($(( $dt1 - $dt2 )) / 86400)) #Difference given in days
 }
 
