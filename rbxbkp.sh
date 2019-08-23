@@ -94,6 +94,8 @@ housekeeper(){
 
     datenow=$(date +%s)
 
+    echo "$datenow $timestr"
+
     diffDate=$(getDateDiff $datenow $timestr)
 
     if [ $diffDate -gt 7 ]
