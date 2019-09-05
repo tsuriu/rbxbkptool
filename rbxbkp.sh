@@ -17,7 +17,7 @@ nfsmnt(){
   if [ $nfsvar -eq 0 ]
   then
       echo "0"
-      echo "OK! NFS IS NOW MOUNTED!" >> $LOG_FILE
+      echo " $(date +"%d/%m/%Y %T") OK! NFS IS NOW MOUNTED!" >> $LOG_FILE
   fi
 }
 
@@ -26,10 +26,10 @@ checknfs(){
   if [ $chkmnt -eq 1 ]
   then
       echo "0"
-      echo "OK! NFS IS MOUNTED" >> $LOG_FILE
+      echo " $(date +"%d/%m/%Y %T") OK! NFS IS MOUNTED" >> $LOG_FILE
   else
       echo "1"
-      echo "FAIL! NFS IF NOTE MOUNTED... Hang on, I'll try to mount it now." >> $LOG_FILE
+      echo "$(date +"%d/%m/%Y %T") FAIL! NFS IF NOTE MOUNTED... Hang on, I'll try to mount it now." >> $LOG_FILE
       nfsmnt
   fi
 }
@@ -46,17 +46,17 @@ getDateDiff(){
 }
 
 bkprun(){
-  echo "Running RouterBOX backup routine" >> $LOG_FILE
+  echo "$(date +"%d/%m/%Y %T") Running RouterBOX backup routine" >> $LOG_FILE
   t1=$(date "+%s")
   /usr/bin/utils/router.box/backup executa $bkpusr isupergaus;
   t2=$(date "+%s")
   t=$(echo $(($(( $t1 - $t2 )) / 60)))
-  echo "RouterBOX backup is done in $t secs" >> $LOG_FILE
+  echo "$(date +"%d/%m/%Y %T") RouterBOX backup is done in $t secs" >> $LOG_FILE
 }
 
 bkpdisc(){
 
-  echo "Starting to move files to the right places" >> $LOG_FILE
+  echo "$(date +"%d/%m/%Y %T") Starting to move files to the right places" >> $LOG_FILE
 
   for FILE in $FILES
   do
@@ -71,12 +71,12 @@ bkpdisc(){
 
     finalfile=$(echo "$timestr"_"$flname")
 
-    echo "$diffDate $finalfile"
+    #echo "$diffDate $finalfile"
 
     if [ $diffDate -le 7 -a ! -f "$NFS_DIR/$finalfile" ]
     then
       cp $BKP_DIR/$flname $NFS_DIR/$finalfile
-      echo "$flname has been transfered" >> $LOG_FILE
+      echo "$(date +"%d/%m/%Y %T") $flname has been transfered" >> $LOG_FILE
     fi
   done
 }
@@ -100,9 +100,9 @@ housekeeper(){
 
     if [ $diffDate -gt 7 ]
     then
-      echo "bye bye... $bkpname"
+      echo "$(date +"%d/%m/%Y %T") bye bye... $bkpname"
     #  rm -rf $NFS_DIR/$bkpname
-      echo "$bkpname has been deleted" >> $LOG_FILE
+      echo "$(date +"%d/%m/%Y %T") $bkpname has been deleted" >> $LOG_FILE
     fi
   done
 }
@@ -113,7 +113,7 @@ then
   bkprun
   bkpdisc
 #  housekeeper
-  echo "Everything works fine!"
+  echo "$(date +"%d/%m/%Y %T") Everything works fine!"
 else
-  echo "Something has fail, please check..."
+  echo "$(date +"%d/%m/%Y %T") Something has fail, please check..."
 fi
