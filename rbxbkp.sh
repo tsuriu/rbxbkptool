@@ -42,7 +42,8 @@ getDateDiff(){
   dt1=$1
   dt2=$2
   
-  echo $(( $(( $dt1 - $dt2 )) / 86400 )) #Difference given in days
+  echo $(( (((dt1-dt2) > 0 ? (dt1-dt2) : (dt2-dt1)) + 43200) / 86400 )) #Difference given in days
+  #echo $(( $(( $dt1 - $dt2 )) / 86400 )) #Difference given in days
 }
 
 bkprun(){
@@ -100,8 +101,8 @@ housekeeper(){
 
     if [ $diffDate -gt 7 ]
     then
-      echo "$(date +"%d/%m/%Y %T") bye bye... $bkpname"
-    #  rm -rf $NFS_DIR/$bkpname
+      echo "$(date +"%d/%m/%Y %T") bye bye... $bkpname. It's $diffDate days old."
+      #  rm -rf $NFS_DIR/$bkpname
       echo "$(date +"%d/%m/%Y %T") $bkpname has been deleted" >> $LOG_FILE
     fi
   done
@@ -112,7 +113,7 @@ if [ $nfsst == "0" ]
 then
   bkprun
   bkpdisc
-#  housekeeper
+  housekeeper
   echo "$(date +"%d/%m/%Y %T") Everything works fine!"
 else
   echo "$(date +"%d/%m/%Y %T") Something has fail, please check..."
