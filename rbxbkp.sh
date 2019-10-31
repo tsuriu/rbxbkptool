@@ -1,12 +1,9 @@
 #!/bin/bash
 
-TMP_FILE='rbx_bkp_tmp.csv'
-
 LOG_FILE='/var/log/rbx_bkp.log'
 
 NFS_DIR='/mnt/RBX_BKP'
 BKP_DIR='/var/www/routerbox/file/doc'
-
 
 bkpusr='tulioamancio'
 
