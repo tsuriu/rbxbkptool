@@ -1,11 +1,6 @@
 #!/bin/bash
 
-LOG_FILE='/var/log/rbx_bkp.log'
-
-NFS_DIR='/mnt/RBX_BKP'
-BKP_DIR='/var/www/routerbox/file/doc'
-
-bkpusr='tulioamancio'
+source rbxbkp_conf.sh
 
 nfsmnt(){
   nfsvar=$(mount -t nfs 172.31.254.26:/nfs/rbx $NFS_DIR -O user=rbx,pass=e45b6e3959 | wc -l)
@@ -29,16 +24,16 @@ checknfs(){
   fi
 }
 
-convertDate(){
-  echo $(date -d $1 +%s)
-}
+getfllst(){
+  if [ $2 == "nt"]
+  then
+      sig="-"
+  elif [ $2 == "ot"]
+  then
+      sig="+"
+  fi
 
-getDateDiff(){
-  dt1=$1
-  dt2=$2
-  
-  echo $(( (((dt1-dt2) > 0 ? (dt1-dt2) : (dt2-dt1)) + 43200) / 86400 )) #Difference given in days
-  #echo $(( $(( $dt1 - $dt2 )) / 86400 )) #Difference given in days
+  echo $(find $1 -name "*bkp*" -type f -mtime $sig$3)
 }
 
 bkprun(){
@@ -51,50 +46,26 @@ bkprun(){
 }
 
 bkpdisc(){
-  FILES=`ls -l --time-style="long-iso" /var/www/routerbox/file/doc | grep bkp | awk '$1=$1' | cut -d" " -f6,8 | sed "s/ /\|/g"`
-  
   echo "$(date +"%d/%m/%Y %T") Starting to move files to the right places" >> $LOG_FILE
 
-  for FILE in $FILES
+  for FILE in $(getfllst $NFS_DIR "nt" 7)
   do
-    flname=$(cut -d"|" -f2 <<< $FILE)
-    fldate=$(cut -d"|" -f1 <<< $FILE)
-
-    timestr=$(convertDate $fldate)
-
-    datenow=$(date +%s)
-
-    diffDate=$(getDateDiff $datenow $timestr)
-
-    finalfile=$(echo "$timestr"_"$flname")
-
-    #echo "$diffDate $finalfile"
-
-    if [ $diffDate -le 7 -a ! -f "$NFS_DIR/$finalfile" ]
+    flname=$(cut -d"/" -f7 <<< $FILE)
+    
+    if [ ! -f "$NFS_DIR/$flname" ]
     then
-      cp $BKP_DIR/$flname $NFS_DIR/$finalfile
+      #cp $BKP_DIR/$flname $NFS_DIR
       echo "$(date +"%d/%m/%Y %T") $flname has been transfered" >> $LOG_FILE
     fi
   done
 }
 
 housekeeper(){
-  BKFILES=`ls -l --time-style="long-iso" $NFS_DIR | grep bkp | awk '$1=$1' | cut -d" " -f6,8 | sed "s/ /\|/g"`
-  
   echo "It's time to clean your mess" >> $LOG_FILE
 
-  for BKFILE in $BKFILES
+  for BKFILE in $(getfllst $BKP_DIR "ot" 7)
   do
-    bkpname=$(cut -d"|" -f2 <<< $BKFILE)
-    bkpdate=$(cut -d"_" -f1 <<< $bkpname)
-
-    timestr=$(convertDate $bkpdate)
-
-    datenow=$(date +%s)
-
-    diffDate=$(getDateDiff $datenow $timestr)
-
-    echo $diffDate
+    bkpname=$(cut -d"/" -f2 <<< $BKFILE)
 
     if [ $diffDate -gt 7 ]
     then
@@ -108,7 +79,7 @@ housekeeper(){
 nfsst=$(checknfs)
 if [ $nfsst == "0" ]
 then
-  bkprun
+  #bkprun
   bkpdisc
   housekeeper
   echo "$(date +"%d/%m/%Y %T") Everything works fine!"
