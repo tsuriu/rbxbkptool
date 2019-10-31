@@ -7,8 +7,6 @@ LOG_FILE='/var/log/rbx_bkp.log'
 NFS_DIR='/mnt/RBX_BKP'
 BKP_DIR='/var/www/routerbox/file/doc'
 
-FILES=`ls -l --time-style="long-iso" /var/www/routerbox/file/doc | grep bkp | awk '$1=$1' | cut -d" " -f6,8 | sed "s/ /\|/g"`
-BKFILES=`ls -l --time-style="long-iso" $NFS_DIR | grep bkp | awk '$1=$1' | cut -d" " -f6,8 | sed "s/ /\|/g"`
 
 bkpusr='tulioamancio'
 
@@ -51,12 +49,13 @@ bkprun(){
   t1=$(date "+%s")
   /usr/bin/utils/router.box/backup executa $bkpusr isupergaus;
   t2=$(date "+%s")
-  t=$(echo $(($(( $t1 - $t2 )) / 60)))
+  t=$(echo $(($(( $t2 - $t1 )) / 60)))
   echo "$(date +"%d/%m/%Y %T") RouterBOX backup is done in $t secs" >> $LOG_FILE
 }
 
 bkpdisc(){
-
+  FILES=`ls -l --time-style="long-iso" /var/www/routerbox/file/doc | grep bkp | awk '$1=$1' | cut -d" " -f6,8 | sed "s/ /\|/g"`
+  
   echo "$(date +"%d/%m/%Y %T") Starting to move files to the right places" >> $LOG_FILE
 
   for FILE in $FILES
@@ -83,7 +82,8 @@ bkpdisc(){
 }
 
 housekeeper(){
-
+  BKFILES=`ls -l --time-style="long-iso" $NFS_DIR | grep bkp | awk '$1=$1' | cut -d" " -f6,8 | sed "s/ /\|/g"`
+  
   echo "It's time to clean your mess" >> $LOG_FILE
 
   for BKFILE in $BKFILES
