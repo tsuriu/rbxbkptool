@@ -25,10 +25,10 @@ checknfs(){
 }
 
 getfllst(){
-  if [ $2 == "nt"]
+  if [ $2 == "nt" ]
   then
       sig="-"
-  elif [ $2 == "ot"]
+  elif [ $2 == "ot" ]
   then
       sig="+"
   fi
@@ -48,13 +48,13 @@ bkprun(){
 bkpdisc(){
   echo "$(date +"%d/%m/%Y %T") Starting to move files to the right places" >> $LOG_FILE
 
-  for FILE in $(getfllst $NFS_DIR "nt" 7)
+  for FILE in $(getfllst $BKP_DIR "nt" 7)
   do
     flname=$(cut -d"/" -f7 <<< $FILE)
     
     if [ ! -f "$NFS_DIR/$flname" ]
     then
-      #cp $BKP_DIR/$flname $NFS_DIR
+      cp $BKP_DIR/$flname $NFS_DIR
       echo "$(date +"%d/%m/%Y %T") $flname has been transfered" >> $LOG_FILE
     fi
   done
@@ -63,23 +63,19 @@ bkpdisc(){
 housekeeper(){
   echo "It's time to clean your mess" >> $LOG_FILE
 
-  for BKFILE in $(getfllst $BKP_DIR "ot" 7)
+  for BKFILE in $(getfllst $NFS_DIR "ot" 7)
   do
-    bkpname=$(cut -d"/" -f2 <<< $BKFILE)
+    bkpname=$(cut -d"/" -f4 <<< $BKFILE)
 
-    if [ $diffDate -gt 7 ]
-    then
-      echo "$(date +"%d/%m/%Y %T") bye bye... $bkpname. It's $diffDate days old."
-      #  rm -rf $NFS_DIR/$bkpname
-      echo "$(date +"%d/%m/%Y %T") $bkpname has been deleted" >> $LOG_FILE
-    fi
+    rm -rf $NFS_DIR/$bkpname
+    echo "$(date +"%d/%m/%Y %T") $bkpname has been deleted" >> $LOG_FILE
   done
 }
 
 nfsst=$(checknfs)
 if [ $nfsst == "0" ]
 then
-  #bkprun
+  bkprun
   bkpdisc
   housekeeper
   echo "$(date +"%d/%m/%Y %T") Everything works fine!"
