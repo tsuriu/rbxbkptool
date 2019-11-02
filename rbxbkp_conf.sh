@@ -1,11 +1,11 @@
 #!/bin/env/ bash
 
-LOG_FILE='/var/log/rbx_bkp2.log'
+LOG_FILE='/var/log/'
 
-NFS_IP='172.31.254.26'
-NFS_DIR='/mnt/RBX_BKP'
-NFS_USR='rbx'
-NFS_PSD='e45b6e3959'
+NFS_IP='xxx.xxx.xxx.xxx'
+NFS_DIR='/mnt/'
+NFS_USR='nfs_usr'
+NFS_PSD='nfs_pass'
 
 BKP_DIR='/var/www/routerbox/file/doc'
-BKP_USR='tulioamancio'
+BKP_USR='rbx_usr'
