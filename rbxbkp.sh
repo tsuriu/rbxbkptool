@@ -75,7 +75,7 @@ housekeeper(){
 nfsst=$(checknfs)
 if [ $nfsst == "0" ]
 then
-  bkprun
+  #bkprun
   bkpdisc
   housekeeper
   echo "$(date +"%d/%m/%Y %T") Everything works fine!"
