@@ -3,7 +3,7 @@
 source rbxbkp_conf.sh
 
 nfsmnt(){
-  nfsvar=$(mount -t nfs 172.31.254.26:/nfs/rbx $NFS_DIR -O user=rbx,pass=e45b6e3959 | wc -l)
+  nfsvar=$(mount -t nfs yyy.yyy.yyy.yyy:/nfs/rbx $NFS_DIR -O user=xxxx,pass=xxxxxx | wc -l)
   if [ $nfsvar -eq 0 ]
   then
       echo "0"
